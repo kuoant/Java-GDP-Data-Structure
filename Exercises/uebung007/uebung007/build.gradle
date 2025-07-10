@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java'
+    id 'checkstyle'
+}
+
+
+checkstyle {
+    toolVersion "8.36"
+}
+
+
+group 'ch.unibas.dmi'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 17
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://shapemodelling.cs.unibas.ch/repo")
+    }
+
+}
+
+
+dependencies {
+    implementation 'ch.unibas.informatik:jturtle:0.7'
+    testImplementation 'junit:junit:4.12'
+}
+
+test {
+    dependsOn cleanTest
+    testLogging.showStandardStreams = true
+    testLogging.events "passed", "skipped", "failed", "standardOut", "standardError"
+}
+
