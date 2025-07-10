@@ -1,0 +1,72 @@
+# Gefundene Fehler
+
+Fehler in der findChar-Methode:
+
+1. ++i müsste eigentlich i++ sein, sonst wird bereits vor Ausführung inkrementiert, was kein Sinn macht bzw. unleserlich ist.
+2. Die Variable i ist gar nicht sichtbar ausserhalb der for-Schleife und kann somit nicht zurückgegeben werden.
+3. Der Code ist nicht wirklich sauber lesbar, da die geschweiften Klammern weggelassen wurden.
+4. Man könnte dem Benutzer auch mit Optionals (statt Rückgabe -1) als Rückgabetyp signalisieren, dass der Wert nicht vorkommen kann.
+5. Es wird nicht i=-1 zurückgegeben, wenn der Character nicht vorhanden ist.
+
+Hier der korrigierte Code:
+
+    public static int findChar(String s, char c) { 
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == c) {
+                return i;
+            }
+        }
+        int i = -1;
+        return i;
+    }
+
+
+Fehler in der Accountklasse:
+
+1. Im Konstruktor muss this.name und this.value verwendet werden, sonst kann Java nicht zwischen Parameter und Objektfelder unterscheiden.
+2. In der toString-Methode fehlt das return vor dem String.
+3. In der testAccount-Methode fehlt der Datentyp von i (int).
+4. in der for-Schleife steht i <= account.length. Ein Index beginnt aber die Zählung mit 0. D.h. es kommt zu eine IndexOutOfBounds-Exception. Es müsste i < accounts.length heissen.
+5. Es sollte sollte post inkrementiert werden, also i++ und nicht ++i.
+6. Bei der For-Schleife fehlen die geschweiften Klammern. Das führt dazu das beim zweiten Print-Statement die Variable i nicht mehr erkennbar ist für Java.
+7. Accounts soll ein Array sein. Arrays sind aber nicht flexibel und können nicht beliebig verlängert werden. Es muss von Anfang an definiert werden,
+wie lange der Array sein soll, sonst gibt Java ein Fehler aus. Korrektur: Account accounts[] = new Account[2];
+
+Hier der korrigierte Code:
+
+package threads;
+
+public class Account {
+
+    private double value;
+    private String name;
+    
+    Account(String name, double value) { 
+        this.name = name; 
+        this.value = value; 
+    }
+    
+    public String toString() { 
+        return "Account: " +name + " contains " + value + "chf";
+    }
+    
+    public static void testAccount() {
+    
+        Account accounts[] = new Account[2];
+    
+        accounts[0] = new Account("Petra", 111);
+        accounts[1] = new Account("Klaus", 999);
+    
+        for (int i=0; i < accounts.length; i++) {
+            System.out.print("account " + i +": ");
+            System.out.println(accounts[i]);
+        }
+    
+    }
+
+    public static void main(String[] args) {
+        Account.testAccount();
+    }
+    
+}

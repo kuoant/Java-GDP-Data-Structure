@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.cs125-illinois:gradlegrader:1.0.1'
+    }
+}
+
+plugins {    
+    id 'java'
+    id 'checkstyle'
+}
+
+group 'ch.unibas.dmi'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://dl.bintray.com/egp/maven")
+    }
+
+}
+
+dependencies {    
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.github.cs125-illinois:gradlegrader:1.0.1'
+}
+
+checkstyle {
+    toolVersion "10.5.0"
+    configFile = file('./config/checkstyle/checkstyle.xml')
+}
+
+test {
+    dependsOn cleanTest
+    testLogging.showStandardStreams = true
+    testLogging.events "passed", "skipped", "failed", "standardOut", "standardError"
+}
